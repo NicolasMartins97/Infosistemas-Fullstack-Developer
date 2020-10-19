@@ -1,0 +1,8 @@
+{
+  "/veiculos": {
+    "target": "http://localhost:3080",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

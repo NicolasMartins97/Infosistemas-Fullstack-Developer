@@ -1,0 +1,31 @@
+{
+  "veiculos": [
+    {
+      "id": "5f8c1e4e1bb51424a00fb8aa",
+      "placa": "KRB4665",
+      "chassi": "88HAtA0ATS9K69485",
+      "renavam": "03086981433",
+      "modelo": "Celer Hatch 1.5 16V Flex 4p",
+      "marca": "CHERY",
+      "ano": "2020"
+    },
+    {
+      "id": "5f8cbc046de8461898f15773",
+      "placa": "IWN8182",
+      "chassi": "1K2A9nH79X7735652",
+      "renavam": "25702543832",
+      "modelo": "Golf  BLACK EDITON 2.0 Mi T. Flex 8V Tip",
+      "marca": "VW - VolksWagen",
+      "ano": "2020"
+    },
+    {
+      "id": "5f8ce4368229b717b824fb2e",
+      "placa": "OWG1068",
+      "chassi": "5eA7tn27J09AL5287",
+      "renavam": "86076366992",
+      "modelo": "XJ-8 Executive/ Centenary 4.0",
+      "marca": "Jaguar",
+      "ano": "2020"
+    }
+  ]
+}

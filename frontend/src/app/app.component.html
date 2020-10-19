@@ -1,0 +1,186 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      Gerenciamento de Veículos
+    </li>
+  </ol>
+</nav>
+<div class="container-fluid"></div>
+<div class="container-fluid">
+  <div class="card list-veiculo">
+    <h5 class="card-header">Lista de Veículos</h5>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Placa</th>
+            <th scope="col">Chassi</th>
+            <th scope="col">Renavam</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Ano</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let veiculo of veiculos">
+            <td>{{ veiculo._id }}</td>
+            <td>{{ veiculo.placa }}</td>
+            <td>{{ veiculo.chassi }}</td>
+            <td>{{ veiculo.renavam }}</td>
+            <td>{{ veiculo.modelo }}</td>
+            <td>{{ veiculo.marca }}</td>
+            <td>{{ veiculo.ano }}</td>
+            <td>
+              <button type="button" class="btn btn-warning btn-sm" (click)="editVeiculo(veiculo)">
+                Editar
+              </button>
+              <button type="button" class="btn btn-danger btn-sm ml-1" (click)="removeVeiculo(veiculo)">
+                Deletar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <button type="button" class="btn btn-success btn-sm u-btn" (click)="newVeiculo(f)">
+    Novo Registro
+  </button>
+
+  <div class="card add-veiculo hide" [ngClass]="{ 'show': alertC()===1 }">
+    <h5 class="card-header">{{titleText()}} Veículo</h5>
+    <div class="card-body">
+      <form id="add-form" (ngSubmit)="f.form.valid && saveVeiculo(f)" #f="ngForm" novalidate>
+        <div class="form-group">
+          <label for="id">ID</label>
+          <input type="text" [(ngModel)]="veiculo._id" id="id" name="id" #id="ngModel" required class="form-control"
+            placeholder="(ID Automático)" disabled />
+        </div>
+        <div class="form-group">
+          <label for="placa">Placa</label>
+          <input type="text" [(ngModel)]="veiculo.placa" id="placa" name="placa" #placa="ngModel" required
+            class="form-control" [ngClass]="{ 'is-invalid': f.submitted && placa.invalid }" minlength="7" maxlength="7"
+            oninput="this.value = this.value.replace(/[^a-zA-Z0-9]+/g, '').replace(/(\..*)\./g, '$1');" />
+          <div *ngIf="f.submitted && placa.invalid" class="invalid-feedback">
+            <div *ngIf="placa.errors.required">
+              O código da Placa deve conter 7 dígitos.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="chassi">Chassi</label>
+          <input type="text" [(ngModel)]="veiculo.chassi" id="chassi" name="chassi" #chassi="ngModel" required
+            class="form-control" [ngClass]="{ 'is-invalid': f.submitted && chassi.invalid }" minlength="17"
+            maxlength="17"
+            oninput="this.value = this.value.replace(/[^a-zA-Z0-9]+/g, '').replace(/(\..*)\./g, '$1');" />
+          <div *ngIf="f.submitted && chassi.invalid" class="invalid-feedback">
+            <div *ngIf="chassi.errors.required">
+              O código da Placa deve conter 17 dígitos.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="renavam">Renavam</label>
+          <input type="text" [(ngModel)]="veiculo.renavam" id="renavam" name="renavam" #renavam="ngModel" required
+            class="form-control" [ngClass]="{ 'is-invalid': f.submitted && renavam.invalid }" minlength="11"
+            maxlength="11" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+          <div *ngIf="f.submitted && renavam.invalid" class="invalid-feedback">
+            <div *ngIf="renavam.errors.required">
+              O número do Renavam deve conter 11 dígitos.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="modelo">Modelo</label>
+          <input type="text" [(ngModel)]="veiculo.modelo" id="modelo" name="modelo" #modelo="ngModel" required
+            class="form-control" [ngClass]="{ 'is-invalid': f.submitted && modelo.invalid }" minlength="1"
+            maxlength="50" />
+          <div *ngIf="f.submitted && modelo.invalid" class="invalid-feedback">
+            <div *ngIf="modelo.errors.required">
+              Insira o nome de um Modelo válido.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="marca">Marca</label>
+          <input type="text" [(ngModel)]="veiculo.marca" id="marca" name="marca" #marca="ngModel" required
+            class="form-control" [ngClass]="{ 'is-invalid': f.submitted && marca.invalid }" minlength="1"
+            maxlength="30" />
+          <div *ngIf="f.submitted && marca.invalid" class="invalid-feedback">
+            <div *ngIf="marca.errors.required">
+              Insira o nome de uma Marca válida.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ano">Ano</label>
+          <input type="text" [(ngModel)]="veiculo.ano" id="ano" name="ano" #ano="ngModel" required class="form-control"
+            [ngClass]="{ 'is-invalid': f.submitted && ano.invalid }" minlength="4" maxlength="4"
+            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+          <div *ngIf="f.submitted && ano.invalid" class="invalid-feedback">
+            <div *ngIf="ano.errors.required">Insira um Ano válido.</div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-add-veiculo">
+          Salvar
+        </button>
+        <button type="reset" class="btn btn-secondary btn-add-veiculo" (click)="cleanForm(f)">
+          Cancelar
+        </button>
+      </form>
+    </div>
+  </div>
+
+
+  <div class="card add-veiculo hide" [ngClass]="{ 'show': alertC()===2 }">
+    <h5 class="card-header">Remover Veículo?</h5>
+    <div class="card-body">
+      <form id="add-form" (ngSubmit)="deleteVeiculo(veiculo)" #f="ngForm" novalidate>
+        <div class="form-group">
+          <label for="id">ID</label>
+          <input type="text" [(ngModel)]="veiculo._id" id="_id" name="_id" #id="ngModel" class="form-control"
+            disabled />
+        </div>
+        <div class="form-group">
+          <label for="placa">Placa</label>
+          <input type="text" [(ngModel)]="veiculo.placa" id="placa" name="placa" #placa="ngModel" class="form-control"
+            disabled />
+        </div>
+        <div class="form-group">
+          <label for="chassi">Chassi</label>
+          <input type="text" [(ngModel)]="veiculo.chassi" id="chassi" name="chassi" #chassi="ngModel"
+            class="form-control" disabled />
+        </div>
+        <div class="form-group">
+          <label for="renavam">Renavam</label>
+          <input type="text" [(ngModel)]="veiculo.renavam" id="renavam" name="renavam" #renavam="ngModel"
+            class="form-control" disabled />
+        </div>
+        <div class="form-group">
+          <label for="modelo">Modelo</label>
+          <input type="text" [(ngModel)]="veiculo.modelo" id="modelo" name="modelo" #modelo="ngModel"
+            class="form-control" disabled />
+        </div>
+        <div class="form-group">
+          <label for="marca">Marca</label>
+          <input type="text" [(ngModel)]="veiculo.marca" id="marca" name="marca" #marca="ngModel" disabled
+            class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="ano">Ano</label>
+          <input type="text" [(ngModel)]="veiculo.ano" id="ano" name="ano" #ano="ngModel" disabled
+            class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-add-veiculo">
+          Sim
+        </button>
+        <button type="reset" class="btn btn-secondary btn-add-veiculo" (click)="cleanForm(f)">
+          Não
+        </button>
+      </form>
+    </div>
+  </div>
+
+</div>
