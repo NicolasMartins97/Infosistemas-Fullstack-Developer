@@ -7,3 +7,6 @@ Executar Angular no CMD:
 - cd frontend
 - yarn start
 - http://localhost:4200
+
+Tecnologias utilizadas no Backend: NodeJS, MongoDB, Express e BodyParser
+Tecnologias utilizadas no Frontend: Angular CLI, Bootstrap e JSON Server
